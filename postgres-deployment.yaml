@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: vms-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/postgres"
+        env:
+          - name: POSTGRES_DB
+            value: "vms"
+          - name: POSTGRES_USER
+            # Lấy từ secret (nếu image Postgres custom có ENV cho user/password)
+            valueFrom:
+              secretKeyRef:
+                name: vms-secret
+                key: APP_SQL_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: vms-secret
+                key: APP_SQL_PASSWORD
+        ports:
+          - containerPort: 5432
+        volumeMounts:
+          - name: postgres-data
+            mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-pvc

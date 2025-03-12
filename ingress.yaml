@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vms-ingress
+  namespace: vms-namespace
+  annotations:
+    kubernetes.io/ingress.class: "nginx"  # Bạn có thể thay đổi thành ingress class khác nếu cần
+spec:
+  rules:
+    - host: my-vms.test.com  # Nếu chưa có domain, có thể bỏ trống hoặc sử dụng IP của ALB
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: vms-be
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vms-fe
+                port:
+                  number: 80
+          - path: /minio
+            pathType: Prefix
+            backend:
+              service:
+                name: minio
+                port:
+                  number: 9000  # MinIO thường chạy trên cổng 9000
+          - path: /pgadmin
+            pathType: Prefix
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80  # pgAdmin thường chạy trên cổng 80

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+  namespace: vms-namespace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi  # Dung lượng bạn muốn
+  storageClassName: gp2
+  volumeName: minio-pv  # Gán PVC vào PV minio-pv

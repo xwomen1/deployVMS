@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vms-be
+  namespace: vms-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vms-be
+  template:
+    metadata:
+      labels:
+        app: vms-be
+    spec:
+      containers:
+      - name: vms-be
+        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms-be"
+        env:
+          # Lấy từ ConfigMap
+          - name: APP_ENABLE_TLS
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_ENABLE_TLS
+          - name: APP_LISTEN_ADDR
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_LISTEN_ADDR
+          - name: APP_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_BASE_URL
+          - name: APP_SERVICE_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_SERVICE_PATH
+          - name: APP_ENABLE_SQL
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_ENABLE_SQL
+          - name: APP_SQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_SQL_HOST
+          - name: APP_SQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_SQL_PORT
+          - name: APP_SQL_DBNAME
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_SQL_DBNAME
+          - name: APP_SQL_SSLMODE
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_SQL_SSLMODE
+          - name: APP_MINIO_ENABLE
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_MINIO_ENABLE
+          - name: APP_MINIO_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_MINIO_ENDPOINT
+          - name: APP_MINIO_ACCESSKEY_ID
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_MINIO_ACCESSKEY_ID
+          - name: APP_MINIO_USESSL
+            valueFrom:
+              configMapKeyRef:
+                name: vms-be-config
+                key: APP_MINIO_USESSL
+          # Lấy từ Secret
+          - name: APP_SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: vms-secret
+                key: APP_SQL_USER
+          - name: APP_SQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: vms-secret
+                key: APP_SQL_PASSWORD
+          - name: APP_MINIO_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: vms-secret
+                key: APP_MINIO_SECRET_ACCESS_KEY
+        ports:
+          - containerPort: 80
