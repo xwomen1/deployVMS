@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
       - name: vms-be
-        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms-be"
+        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms-be:latest"
         env:
-          # Lấy từ ConfigMap
+          
           - name: APP_ENABLE_TLS
             valueFrom:
               configMapKeyRef:
@@ -73,11 +73,11 @@ spec:
               configMapKeyRef:
                 name: vms-be-config
                 key: APP_MINIO_ENDPOINT
-          - name: APP_MINIO_ACCESSKEY_ID
+          - name: APP_SQL_SCHEMA
             valueFrom:
               configMapKeyRef:
                 name: vms-be-config
-                key: APP_MINIO_ACCESSKEY_ID
+                key: APP_SQL_SCHEMA
           - name: APP_MINIO_USESSL
             valueFrom:
               configMapKeyRef:
@@ -94,10 +94,15 @@ spec:
               secretKeyRef:
                 name: vms-secret
                 key: APP_SQL_PASSWORD
+          - name: APP_MINIO_ACCESSKEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: vms-secret
+                key: APP_MINIO_ACCESSKEY_ID
           - name: APP_MINIO_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
                 name: vms-secret
                 key: APP_MINIO_SECRET_ACCESS_KEY
         ports:
-          - containerPort: 80
+          - containerPort: 10000

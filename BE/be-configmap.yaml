@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vms-be-config
+  namespace: vms-namespace
+data:
+  APP_ENABLE_TLS: "false"
+  APP_LISTEN_ADDR: 0.0.0.0:10000  # Cổng bên ngoài của backend là 10000
+  APP_BASE_URL: hostserver
+  APP_SERVICE_PATH: /vms/api/v0
+  APP_ENABLE_SQL: "true"
+  APP_SQL_HOST: postgres-service.database.svc.cluster.local  # Tên service của Postgres
+  APP_SQL_PORT: "5432"
+  APP_SQL_DBNAME: vms
+  APP_SQL_SSLMODE: "disable"
+  APP_MINIO_ENABLE: "true"
+  APP_MINIO_USESSL: "true"
+  APP_SQL_SCHEMA: public
+  APP_MINIO_ENDPOINT: minio-service.minio.svc.cluster.local
+
+
