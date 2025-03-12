@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vms-fe
+  namespace: vms-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vms-fe
+  template:
+    metadata:
+      labels:
+        app: vms-fe
+    spec:
+      containers:
+      - name: vms-fe
+        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms_fe1:latest"
+        envFrom:
+          - configMapRef:
+              name: vms-fe-config  # Tham chiếu đến ConfigMap vms-fe-config
+        ports:
+          - containerPort: 3000
