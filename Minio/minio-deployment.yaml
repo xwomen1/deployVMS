@@ -31,7 +31,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: minio-secret
-              key: MINIO_SECRET_KEY``
+              key: MINIO_SECRET_KEY
         ports:
         - containerPort: 9000
         - containerPort: 9001
