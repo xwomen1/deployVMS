@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: minio
-  namespace: minio
 spec:
   replicas: 1
   selector:
@@ -15,15 +14,12 @@ spec:
     spec:
       containers:
         - name: minio
-          image: minio/minio:latest
+          image: quay.io/minio/minio
           args:
             - server
             - /data
             - --console-address
             - ":9001"
-          ports:
-            - containerPort: 9000
-            - containerPort: 9001
           env:
             - name: MINIO_ROOT_USER
               valueFrom:
@@ -35,6 +31,9 @@ spec:
                 secretKeyRef:
                   name: minio-secret
                   key: MINIO_ROOT_PASSWORD
+          ports:
+            - containerPort: 9000
+            - containerPort: 9001
           volumeMounts:
             - name: minio-data
               mountPath: /data
@@ -42,7 +41,3 @@ spec:
         - name: minio-data
           persistentVolumeClaim:
             claimName: minio-pvc
-
-
-
-
