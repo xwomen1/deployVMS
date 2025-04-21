@@ -1,12 +1,13 @@
 # kind-config.yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
+name: minio-cluster
 nodes:
-- role: control-plane
-  extraPortMappings:
-  - containerPort: 9000
-    hostPort: 9000
-    protocol: TCP
-  - containerPort: 9001
-    hostPort: 9001
-    protocol: TCP
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 9000
+        hostPort: 9000
+        protocol: TCP
+      - containerPort: 9001
+        hostPort: 9001
+        protocol: TCP
