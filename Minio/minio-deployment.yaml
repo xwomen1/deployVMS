@@ -33,11 +33,19 @@ spec:
                   key: MINIO_ROOT_PASSWORD
           ports:
             - containerPort: 9000
+              name: api
+              protocol: TCP
+              hostPort: 9000
             - containerPort: 9001
+              name: webui
+              protocol: TCP
+              hostPort: 9001
           volumeMounts:
             - name: minio-data
-              mountPath: /data
+              mountPath: /data/minio
       volumes:
         - name: minio-data
           persistentVolumeClaim:
             claimName: minio-pvc
+
+
