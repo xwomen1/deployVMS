@@ -106,3 +106,4 @@ spec:
                 key: APP_MINIO_SECRET_ACCESS_KEY
         ports:
           - containerPort: 10000
+       

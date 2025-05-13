@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: vms_postgres
+      POSTGRES_PASSWORD: hieulinhtrang
+      POSTGRES_DB: vms
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tranga2k16@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: hieutranglinh
+    ports:
+      - "80:80"
+    depends_on:
+      - postgres
+
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # API
+      - "9001:9001"   # Console
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: hieulinhtrang
+    volumes:
+      - minio_data:/data
+
+  vms_fe:
+    build: ./vms_fe
+    container_name: vms_fe
+    ports:
+      - "3000:3000"
+    depends_on:
+      - vms_be
+
+  vms_be:
+    build: ./vms_be
+    container_name: vms_be
+    ports:
+      - "10000:10000"
+    environment:
+      APP_MINIO_ENABLE: true
+      APP_MINIO_ENDPOINT: minio:9000
+      APP_MINIO_ACCESSKEY_ID: admin
+      APP_MINIO_SECRET_ACCESS_KEY: hieulinhtrang
+      APP_MINIO_USESSL: false
+      APP_SQL_HOST: postgres
+      APP_SQL_PORT: 5432
+      APP_SQL_DBNAME: vms
+      APP_SQL_SSLMODE: disable
+      APP_SQL_USER: vms_postgres
+      APP_SQL_PASSWORD: hieulinhtrang
+      APP_SQL_SCHEMA: vms
+    depends_on:
+      - postgres
+      - minio
+
+volumes:
+  postgres_data:
+  minio_data:
+# networks:
+#   default:
+#     name: vms_network
+#     driver: bridge
+#     driver_opts:
+#       com.docker.network.bridge.name: vms_network

@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: vms-fe
-        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms_fe1:latest"
+        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms-fe:latest"
+        
         envFrom:
           - configMapRef:
               name: vms-fe-config  # Tham chiếu đến ConfigMap vms-fe-config
