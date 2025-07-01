@@ -9,7 +9,7 @@ data:
   APP_BASE_URL: hostserver
   APP_SERVICE_PATH: /vms/api/v0
   APP_ENABLE_SQL: "true"
-  APP_SQL_HOST: postgres-service.database.svc.cluster.local  # Tên service của Postgres
+  APP_SQL_HOST: postgres-service.vms-namespace.svc.cluster.local  # Tên service của Postgres
   APP_SQL_PORT: "5432"
   APP_SQL_DBNAME: vms
   APP_SQL_SSLMODE: "disable"
