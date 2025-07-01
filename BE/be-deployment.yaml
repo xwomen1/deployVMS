@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: vms-be
-        image: "vmslab1/root-vms_be"
+        image: "vmslab1/vmsbeprune"
         env:
           
           - name: APP_ENABLE_TLS
