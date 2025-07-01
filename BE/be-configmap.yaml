@@ -16,6 +16,6 @@ data:
   APP_MINIO_ENABLE: "true"
   APP_MINIO_USESSL: "true"
   APP_SQL_SCHEMA: public
-  APP_MINIO_ENDPOINT: minio-service.minio.svc.cluster.local
+  APP_MINIO_ENDPOINT: minio-service.vms-namespace.svc.cluster.local
 
 
