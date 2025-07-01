@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: pgadmin-service
-  namespace: database
+  namespace: vms-namespace
 spec:
   selector:
     app: pgadmin
