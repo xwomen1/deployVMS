@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: vms-be
-        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms-be:latest"
+        image: "vmslab1/root-vms_be"
         env:
           
           - name: APP_ENABLE_TLS
