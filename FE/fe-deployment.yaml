@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: vms-fe
-        image: "008971665624.dkr.ecr.ap-east-1.amazonaws.com/vms-fe:latest"
+        image: "vmslab1/vmsfeprune"
         
         envFrom:
           - configMapRef:
